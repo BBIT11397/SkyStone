@@ -96,7 +96,7 @@ public class Teleop extends LinearOpMode {
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         robot.beltMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      //  robot.sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -112,8 +112,8 @@ public class Teleop extends LinearOpMode {
             strafeRight = gamepad1.right_trigger;
 
             // Combine drive and turn for blended motion.
-            left = drive + turn;
-            right = drive - turn;
+            left = drive - turn;
+            right = drive + turn;
 
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
@@ -148,21 +148,21 @@ public class Teleop extends LinearOpMode {
             } else {
                 robot.paddleRight.setPosition(0.3);
             }
-
+*/
             if (gamepad1.left_bumper) {
                 robot.paddleLeft.setPosition(Servo.MIN_POSITION);
             } else {
                 robot.paddleLeft.setPosition(0.7);
             }
 
-            if (gamepad1.y) {
+            if (gamepad1.b) {
                 robot.paddleTop.setPosition(0);
             }
 
-            if (gamepad1.a) {
+            if (gamepad1.x) {
                 robot.paddleTop.setPosition(0.655) ;
             }
-*/
+
 
                 if (gamepad1.a) {
                     robot.jaw.setPosition(0.4);
@@ -185,11 +185,11 @@ public class Teleop extends LinearOpMode {
                 }
 
                 //SWING
-                if (gamepad2.x) {
+                if (gamepad2.right_bumper) {
                     robot.swing.setPosition(1);
                 }
                 //SWING
-                if (gamepad2.b) {
+                if (gamepad2.left_bumper) {
                     robot.swing.setPosition(0);
                 }
 
@@ -235,23 +235,23 @@ public class Teleop extends LinearOpMode {
 
                 //  CHANGE TO GP 2?
                 if (myTimer.milliseconds() > 250) {
-                    if (gamepad1.x || gamepad1.b) {
+                    if (gamepad2.x || gamepad2.b) {
                         if (conveyerOn == ON) {
                             conveyerOn = OFF;
                         } else {
                             conveyerOn = ON;
                         }
-                        if (conveyerOn && gamepad1.x) {
+                        if (conveyerOn && gamepad2.x) {
                             robot.beltMotor.setPower(FORWARD);
-                            robot.sweeper.setPower(FORWARD);
+                 //           robot.sweeper.setPower(FORWARD);
                         }
-                        if (conveyerOn && gamepad1.b) {
+                        if (conveyerOn && gamepad2.b) {
                             robot.beltMotor.setPower(BACKWARDS);
-                            robot.sweeper.setPower(BACKWARDS);
+                   //         robot.sweeper.setPower(BACKWARDS);
                         }
                         if ((conveyerOn == OFF)) {
                             robot.beltMotor.setPower(0);
-                            robot.sweeper.setPower(0);
+                     //       robot.sweeper.setPower(0);
                         }
                         myTimer.reset();
                     }
