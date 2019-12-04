@@ -79,6 +79,9 @@ public class Teleop extends LinearOpMode {
         double currentLSPosition;
         int currentARMPosition;
 
+        double powerDown = -0.25;
+        double powerUp = 0.5;
+
         double FORWARD = 1;
         double BACKWARDS = -1;
         boolean ON = true;
@@ -94,9 +97,6 @@ public class Teleop extends LinearOpMode {
         robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        robot.beltMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-      //  robot.sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -122,6 +122,17 @@ public class Teleop extends LinearOpMode {
                 right /= max;
             }
 
+            if(gamepad2.b){
+                left /= 2;
+                right /= 2;
+                strafeLeft /= 2;
+                strafeRight /= 2;
+                powerUp /= 2;
+                powerDown = powerDown + 0.1;
+            } else {
+                powerDown = -0.25;
+                powerUp = 0.5;
+            }
             if (strafeLeft != 0 || strafeRight != 0) {
                 if (strafeLeft != 0) {
                     robot.rightBack.setPower(strafeLeft);
@@ -142,17 +153,27 @@ public class Teleop extends LinearOpMode {
                 robot.leftFront.setPower(left);
                 robot.rightFront.setPower(right);
             }
-/*
-            if (gamepad1.right_bumper) {
-                robot.paddleRight.setPosition(Servo.MAX_POSITION);
-            } else {
-                robot.paddleRight.setPosition(0.3);
+
+
+            if (gamepad1.a) {
+                robot.jaw.setPosition(0.4);
             }
-*/
-            if (gamepad1.left_bumper) {
-                robot.paddleLeft.setPosition(Servo.MIN_POSITION);
+
+            if (gamepad1.y) {
+                robot.jaw.setPosition(0);
+            }
+
+
+            //ARM MOTOR
+            if (gamepad1.dpad_down || gamepad1.dpad_up) {
+                if (gamepad1.dpad_down ) {
+                    robot.armMotor.setPower(powerDown);
+                }
+                if (gamepad1.dpad_up) {
+                    robot.armMotor.setPower(powerUp);
+                }
             } else {
-                robot.paddleLeft.setPosition(0.7);
+                robot.armMotor.setPower(0);
             }
 
             if (gamepad1.b) {
@@ -163,76 +184,46 @@ public class Teleop extends LinearOpMode {
                 robot.paddleTop.setPosition(0.655) ;
             }
 
+            //SWING
+            if (gamepad2.right_bumper) {
+                robot.swing.setPosition(1);
+            }
+            //SWING
+            if (gamepad2.left_bumper) {
+                robot.swing.setPosition(0);
+            }
 
-                if (gamepad1.a) {
-                    robot.jaw.setPosition(0.4);
-                }
-
-                if (gamepad1.y) {
-                    robot.jaw.setPosition(0);
-                }
-
-                //ARM MOTOR
-            if (gamepad1.dpad_down || gamepad1.dpad_up) {
-                if (gamepad1.dpad_down ) {
-                        robot.armMotor.setPower(-.25);
-                    }
-                    if (gamepad1.dpad_up) {
-                        robot.armMotor.setPower(.5);
-                    }
-                } else {
-                    robot.armMotor.setPower(0);
-                }
-
-                //SWING
-                if (gamepad2.right_bumper) {
-                    robot.swing.setPosition(1);
-                }
-                //SWING
-                if (gamepad2.left_bumper) {
-                    robot.swing.setPosition(0);
-                }
-
-                //LEVELER
-                if (gamepad2.y) {
-                    robot.leveler.setPosition(0.4);
-                }
-
-                if (gamepad2.a) {
-                    robot.leveler.setPosition(0);
-                }
-
-
-                if (gamepad2.dpad_up || gamepad2.dpad_down) {
-                    if (gamepad2.dpad_up) {
-                        currentLSPosition = robot.leadScrew.getCurrentPosition();
-                        if (currentLSPosition <= 11600) {
-                            robot.leadScrew.setPower(1);
-                            telemetry.addLine()
-                                    .addData("lift arm", robot.leadScrew.getCurrentPosition());
-                            telemetry.update();
-                        } else {
-                            robot.leadScrew.setPower(0);
-                        }
-                    }
-                    if (gamepad2.dpad_down) {
-                        currentLSPosition = robot.leadScrew.getCurrentPosition();
-                        if (currentLSPosition >= 300){
-                            robot.leadScrew.setPower(-1);
-                            telemetry.addLine()
+            if (gamepad2.dpad_up || gamepad2.dpad_down) {
+                if (gamepad2.dpad_up) {
+                    currentLSPosition = robot.leadScrew.getCurrentPosition();
+                    if (currentLSPosition <= 11600) {
+                        robot.leadScrew.setPower(1);
+                        telemetry.addLine()
                                 .addData("lift arm", robot.leadScrew.getCurrentPosition());
-                            telemetry.update();
-                        } else {
-                            robot.leadScrew.setPower(0);
-                        }
+                        telemetry.update();
+                    } else {
+                        robot.leadScrew.setPower(0);
                     }
-                } else {
-                    robot.leadScrew.setPower(0);
-                    telemetry.addLine()
-                            .addData("lift arm", robot.leadScrew.getCurrentPosition());
-                    telemetry.update();
                 }
+                if (gamepad2.dpad_down) {
+                    currentLSPosition = robot.leadScrew.getCurrentPosition();
+                    if (currentLSPosition >= 300){
+                        robot.leadScrew.setPower(-1);
+                        telemetry.addLine()
+                                .addData("lift arm", robot.leadScrew.getCurrentPosition());
+                        telemetry.update();
+                    } else {
+                        robot.leadScrew.setPower(0);
+                    }
+                }
+            } else {
+                robot.leadScrew.setPower(0);
+                telemetry.addLine()
+                        .addData("lift arm", robot.leadScrew.getCurrentPosition());
+                telemetry.update();
+            }
 
+/*
                 //  CHANGE TO GP 2?
                 if (myTimer.milliseconds() > 250) {
                     if (gamepad2.x || gamepad2.b) {
@@ -256,7 +247,30 @@ public class Teleop extends LinearOpMode {
                         myTimer.reset();
                     }
                 }
+                if (gamepad1.right_bumper) {
+                    robot.paddleRight.setPosition(Servo.MAX_POSITION);
+                } else {
+                    robot.paddleRight.setPosition(0.3);
+                }
 
+                //LEVELER
+                if (gamepad2.y) {
+                    robot.leveler.setPosition(0.4);
+                }
+
+                if (gamepad2.a) {
+                    robot.leveler.setPosition(0);
+                }
+
+
+            if (gamepad1.left_bumper) {
+                robot.paddleLeft.setPosition(0);
+            }
+
+            if (gamepad1.right_bumper){
+                robot.paddleLeft.setPosition(0.7);
+            }
+*/
             }
         }
     }
