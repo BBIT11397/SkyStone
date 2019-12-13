@@ -22,13 +22,9 @@ public class LightSensorValues extends LinearOpMode {
         while (opModeIsActive()) {
 
             telemetry.addLine()
-                    .addData("green", robot.colorSensor.green());
+                    .addData("Alpha Right", robot.colorSensorRight.alpha());
             telemetry.addLine()
-                    .addData("blue", robot.colorSensor.blue());
-            telemetry.addLine()
-                    .addData("red", robot.colorSensor.red());
-            telemetry.addLine()
-                    .addData("argb", robot.colorSensor.argb());
+                    .addData("Alpha Left", robot.colorSensorLeft.alpha());
             telemetry.update();
         }
     }

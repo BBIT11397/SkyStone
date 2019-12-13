@@ -78,6 +78,7 @@ public class Teleop extends LinearOpMode {
         double currentLevelPosition;
         double currentLSPosition;
         int currentARMPosition;
+        int newARMPositon = 0;
 
         double powerDown = -0.25;
         double powerUp = 0.5;
@@ -97,6 +98,7 @@ public class Teleop extends LinearOpMode {
         robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -123,16 +125,12 @@ public class Teleop extends LinearOpMode {
             }
 
             if(gamepad2.b){
-                left /= 2;
-                right /= 2;
-                strafeLeft /= 2;
-                strafeRight /= 2;
-                powerUp /= 2;
-                powerDown = powerDown + 0.1;
-            } else {
-                powerDown = -0.25;
-                powerUp = 0.5;
+                left /= 4;
+                right /= 4;
+                strafeLeft /= 4;
+                strafeRight /= 4;
             }
+
             if (strafeLeft != 0 || strafeRight != 0) {
                 if (strafeLeft != 0) {
                     robot.rightBack.setPower(strafeLeft);
@@ -166,6 +164,7 @@ public class Teleop extends LinearOpMode {
 
             //ARM MOTOR
             if (gamepad1.dpad_down || gamepad1.dpad_up) {
+                //currentARMPosition = robot.armMotor.getCurrentPosition();
                 if (gamepad1.dpad_down ) {
                     robot.armMotor.setPower(powerDown);
                 }

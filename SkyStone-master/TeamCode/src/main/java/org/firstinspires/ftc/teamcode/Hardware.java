@@ -63,7 +63,8 @@ public class Hardware {
     private ElapsedTime period  = new ElapsedTime();
     private Telemetry telemetry;
 
-    public ColorSensor colorSensor;
+    public ColorSensor colorSensorRight;
+    public ColorSensor colorSensorLeft;
 
     /* Constructor */
     public Hardware(){
@@ -78,7 +79,8 @@ public class Hardware {
         telemetry.addData("hardware init:" , "enter");
         telemetry.update();
 
-        colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
+        colorSensorRight = hwMap.get(ColorSensor.class, "colorSensorRight");
+        colorSensorLeft = hwMap.get(ColorSensor.class,"colorSensorLeft");
 
         // Define and Initialize Motors
         leftBack    = hwMap.get(DcMotor.class, "leftBack");
@@ -206,6 +208,32 @@ public class Hardware {
         leftFront.setTargetPosition(-position);
         leftBack.setTargetPosition(position);
         rightBack.setTargetPosition(-position);
+        rightFront.setTargetPosition(position);
+
+        rightBack.setPower(speed);
+        rightFront.setPower(speed);
+        leftFront.setPower(speed);
+        leftBack.setPower(speed);
+    }
+
+    public void turnRight(int position, double speed){
+        setUpMotors();
+        leftFront.setTargetPosition(position);
+        leftBack.setTargetPosition(position);
+        rightBack.setTargetPosition(-position);
+        rightFront.setTargetPosition(-position);
+
+        rightBack.setPower(speed);
+        rightFront.setPower(speed);
+        leftFront.setPower(speed);
+        leftBack.setPower(speed);
+    }
+
+    public void turnLeft(int position, double speed){
+        setUpMotors();
+        leftFront.setTargetPosition(-position);
+        leftBack.setTargetPosition(-position);
+        rightBack.setTargetPosition(position);
         rightFront.setTargetPosition(position);
 
         rightBack.setPower(speed);

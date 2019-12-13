@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Disabled
     @Autonomous(name="TestFunction", group="bbit")
     public class TestFunction extends LinearOpMode {
 
@@ -25,16 +26,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             // Wait for the game to start (driver presses PLAY)
             waitForStart();
 
-            robot.forward(1800,1);
-            while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                telemetry.addLine()
-                        .addData("Task", "Wait");
-                telemetry.update();
-                idle();
-            }
-            sleep(250);
-
-            robot.strafeRight(1800,1);
+            robot.setUpMotors();
+            robot.turnLeft(1800,1);
             while (robot.checkMotorIsBusy() && opModeIsActive()) {
                 telemetry.addLine()
                         .addData("Task", "Wait");
