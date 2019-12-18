@@ -57,6 +57,7 @@ public class Hardware {
     public Servo paddleTop     = null;
     public Servo jaw           = null;
     public Servo swing         = null;
+    public Servo foundationGrabber = null;
 
   /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -94,6 +95,7 @@ public class Hardware {
         paddleTop   = hwMap.get(Servo.class,"paddleTop");
         jaw     = hwMap.get(Servo.class,"jaw");
         swing   = hwMap.get(Servo.class, "swing");
+        foundationGrabber = hwMap.get(Servo.class, "foundationGrabber");
 
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
@@ -128,6 +130,7 @@ public class Hardware {
         paddleTop.setPosition(0);
         swing.setPosition(.2);
         jaw.setPosition(0.4);
+        //foundationGrabber.setPosition(0);
 
         telemetry.addData("hardware init:" , "exit");
         telemetry.update();

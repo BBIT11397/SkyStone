@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="RightMiddle", group="bbit")
+@Autonomous(name="StrafeRightMiddle", group="bbit")
 public class RightMiddle extends LinearOpMode {
 
     /* Declare OpMode members. */

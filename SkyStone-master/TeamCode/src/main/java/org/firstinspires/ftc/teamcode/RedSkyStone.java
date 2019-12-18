@@ -35,15 +35,6 @@ public class RedSkyStone extends LinearOpMode {
         }
         robot.allMotorsStop();
 
-        robot.strafeLeft(500, 1);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "strafe");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-
         robot.forward(600, 0.25);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
@@ -53,166 +44,54 @@ public class RedSkyStone extends LinearOpMode {
         }
         robot.allMotorsStop();
 
-        sleep(1000);
+        sleep(250);
 
-        double firstBlock = robot.colorSensor.alpha();
+        double firstBlock = robot.colorSensorRight.alpha();
         telemetry.addLine()
-                .addData("firstBlock", firstBlock);
+                .addData("Right", firstBlock);
         telemetry.update();
 
-        robot.backward(600,1);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "backward");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(1000);
-
-        robot.strafeLeft(900, 0.5);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "strafe to next mineral");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(500);
-
-        //run into 2nd block
-        robot.forward(800,0.5);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "forward");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(500);
-
-        double secondBlock = robot.colorSensor.alpha();
+        double secondBlock = robot.colorSensorLeft.alpha();
         telemetry.addLine()
-                .addData("secondBlock", secondBlock);
+                .addData("Left", secondBlock);
         telemetry.update();
 
         boolean foundBlock = false;
 
         //decide what block is skystone
         if(firstBlock <= secondBlock && opModeIsActive()){
-            if(firstBlock + 15 < secondBlock && opModeIsActive()) {
+
+            if(firstBlock + 10000 < secondBlock && opModeIsActive()) {
                 //found skystone
                 foundBlock = true;
                 //back to first block
 
-                robot.setUpMotors();
-                //found sky stone
-                robot.backward(1000,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                robot.strafeRight(1300, 1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
+                telemetry.addData("first", "first");
+                telemetry.update();
 
                 //open paddle top
                 robot.paddleTop.setPosition(0.655);
                 sleep(250);
-
-                robot.forward(2800,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-                //close paddle top
-                robot.paddleTop.setPosition(0.1);
-                sleep(250);
-
-                robot.backward(2800,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                //over line
-                robot.strafeRight(4800, 1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                robot.setUpMotors();
-                robot.turnRight(1800,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                //open top paddle
-                robot.paddleTop.setPosition(0.655);
-                sleep(250);
-
-                robot.backward(2300,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                robot.paddleTop.setPosition(0.1);
-                sleep(250);
-
-            } else {
 
                 robot.backward(600,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
-                            .addData("Task", "backward");
-                    telemetry.update();
+                            .addData("Task", "reline");
                     idle();
                 }
                 robot.allMotorsStop();
-                sleep(500);
+                sleep(250);
 
-                robot.strafeLeft(500, 0.5);
+                robot.strafeRight(500, 1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
                     idle();
                 }
                 robot.allMotorsStop();
-
                 sleep(250);
 
-                //open paddle top
-                robot.paddleTop.setPosition(0.655);
-                sleep(250);
-
-                robot.forward(2800,1);
+                robot.forward(1800,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -224,7 +103,7 @@ public class RedSkyStone extends LinearOpMode {
                 robot.paddleTop.setPosition(0.1);
                 sleep(250);
 
-                robot.backward(3800,1);
+                robot.backward(2400,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -234,7 +113,7 @@ public class RedSkyStone extends LinearOpMode {
                 sleep(250);
 
                 //over line
-                robot.strafeRight(5800, 1);
+                robot.strafeRight(4500, 1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -269,14 +148,109 @@ public class RedSkyStone extends LinearOpMode {
                 robot.paddleTop.setPosition(0.1);
                 sleep(250);
 
+            } else {
+
+                telemetry.addData("first", "third");
+                telemetry.update();
+
+                robot.backward(600,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "backward");
+                    telemetry.update();
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(500);
+
+                robot.strafeLeft(1100, 0.5);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+
+                sleep(250);
+
+                //open paddle top
+                robot.paddleTop.setPosition(0.655);
+                sleep(250);
+
+                robot.forward(2800,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+                //close paddle top
+                robot.paddleTop.setPosition(0.1);
+                sleep(250);
+
+                robot.backward(2500,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                //over line
+                robot.strafeRight(5800, 1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                robot.setUpMotors();
+                robot.turnRight(1800,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                //open top paddle
+                robot.paddleTop.setPosition(0.655);
+                sleep(250);
+
+                robot.setUpMotors();
+                robot.backward(1800,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                robot.paddleTop.setPosition(0.1);
+                sleep(250);
+
             }
         } else {
             if (secondBlock <= firstBlock && opModeIsActive()) {
-                if (secondBlock + 15 < firstBlock && opModeIsActive()) {
+                if (secondBlock + 10000 < firstBlock && opModeIsActive()) {
                     //found sky stone
                     foundBlock = true;
 
+                    telemetry.addData("second", "second");
+                    telemetry.update();
+
                     robot.setUpMotors();
+
+                    //open paddle top
+                    robot.paddleTop.setPosition(0.655);
+                    sleep(250);
+
                     robot.backward(600,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
@@ -285,10 +259,10 @@ public class RedSkyStone extends LinearOpMode {
                         idle();
                     }
                     robot.allMotorsStop();
-                    sleep(500);
+                    sleep(250);
 
                     robot.setUpMotors();
-                    robot.strafeRight(300, 1);
+                    robot.strafeLeft(500, 1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -297,20 +271,7 @@ public class RedSkyStone extends LinearOpMode {
                     robot.allMotorsStop();
                     sleep(250);
 
-                    robot.backward(400,1);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
-
-                    //open paddle top
-                    robot.paddleTop.setPosition(0.655);
-                    sleep(250);
-
-                    robot.forward(2800,1);
+                    robot.forward(1800,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -322,7 +283,7 @@ public class RedSkyStone extends LinearOpMode {
                     robot.paddleTop.setPosition(0.1);
                     sleep(250);
 
-                    robot.backward(3000,1);
+                    robot.backward(2400,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -369,7 +330,10 @@ public class RedSkyStone extends LinearOpMode {
 
                 } else {//strafe to final block]
 
-                    robot.backward(600,1);
+                    telemetry.addData("second", "third");
+                    telemetry.update();
+
+                    robot.backward(1000,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -378,17 +342,7 @@ public class RedSkyStone extends LinearOpMode {
                     robot.allMotorsStop();
                     sleep(250);
 
-                    robot.strafeLeft(500, 1);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
-
-                    //found sky stone
-                    robot.backward(400,1);
+                    robot.strafeLeft(1100, 1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -401,7 +355,7 @@ public class RedSkyStone extends LinearOpMode {
                     robot.paddleTop.setPosition(0.655);
                     sleep(250);
 
-                    robot.forward(2800,1);
+                    robot.forward(2500,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -409,11 +363,12 @@ public class RedSkyStone extends LinearOpMode {
                     }
                     robot.allMotorsStop();
                     sleep(250);
+
                     //close paddle top
                     robot.paddleTop.setPosition(0.1);
                     sleep(250);
 
-                    robot.backward(3800,1);
+                    robot.backward(2700,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -445,6 +400,7 @@ public class RedSkyStone extends LinearOpMode {
                     robot.paddleTop.setPosition(0.655);
                     sleep(250);
 
+                    robot.setUpMotors();
                     robot.backward(1800,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()

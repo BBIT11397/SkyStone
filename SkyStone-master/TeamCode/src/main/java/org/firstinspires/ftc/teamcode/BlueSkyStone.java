@@ -46,55 +46,37 @@ public class BlueSkyStone extends LinearOpMode {
 
         sleep(1000);
 
-        double firstBlock = robot.colorSensorRight.alpha();
+        double firstBlock = robot.colorSensorLeft.alpha();
         telemetry.addLine()
-                .addData("firstBlock", firstBlock);
+                .addData("Left", firstBlock);
         telemetry.update();
-
-        robot.backward(600,1);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "backward");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(1000);
-
-        robot.strafeRight(1000, 0.5);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "strafe to next mineral");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(500);
-
-        //run into 2nd block
-        robot.forward(600,0.5);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "forward");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-        sleep(500);
 
         double secondBlock = robot.colorSensorRight.alpha();
         telemetry.addLine()
-                .addData("secondBlock", secondBlock);
+                .addData("Right", secondBlock);
         telemetry.update();
 
         boolean foundBlock = false;
 
         //decide what block is skystone
         if(firstBlock <= secondBlock && opModeIsActive()){
-            if(firstBlock + 15 < secondBlock && opModeIsActive()) {
+            if(firstBlock + 10000 < secondBlock && opModeIsActive()) {
                 //found skystone
                 foundBlock = true;
                 //back to first block
+
+                //open paddle top
+                robot.paddleTop.setPosition(0.655);
+                sleep(250);
+
+                robot.backward(600,1);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
 
                 robot.strafeLeft(500, 1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
@@ -105,18 +87,6 @@ public class BlueSkyStone extends LinearOpMode {
                 robot.allMotorsStop();
                 sleep(250);
                 //found sky stone
-                robot.backward(1000,1);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
-
-                //open paddle top
-                robot.paddleTop.setPosition(0.655);
-                sleep(250);
 
                 robot.forward(1800,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
@@ -163,7 +133,7 @@ public class BlueSkyStone extends LinearOpMode {
                 robot.paddleTop.setPosition(0.655);
                 sleep(250);
 
-                robot.backward(2300,1);
+                robot.backward(2400,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -246,7 +216,7 @@ public class BlueSkyStone extends LinearOpMode {
                 robot.paddleTop.setPosition(0.655);
                 sleep(250);
 
-                robot.backward(1700,1);
+                robot.backward(1800,1);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -261,11 +231,16 @@ public class BlueSkyStone extends LinearOpMode {
             }
         } else {
             if (secondBlock <= firstBlock && opModeIsActive()) {
-                if (secondBlock + 15 < firstBlock && opModeIsActive()) {
+                if (secondBlock + 10000 < firstBlock && opModeIsActive()) {
                     //found sky stone
                     foundBlock = true;
 
                     robot.setUpMotors();
+
+                    //open paddle top
+                    robot.paddleTop.setPosition(0.655);
+                    sleep(250);
+
                     robot.backward(600,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
@@ -277,26 +252,13 @@ public class BlueSkyStone extends LinearOpMode {
                     sleep(500);
 
                     robot.setUpMotors();
-                    robot.strafeRight(300, 1);
+                    robot.strafeRight(500, 1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
                         idle();
                     }
                     robot.allMotorsStop();
-                    sleep(250);
-
-                    robot.backward(400,1);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
-
-                    //open paddle top
-                    robot.paddleTop.setPosition(0.655);
                     sleep(250);
 
                     robot.forward(1800,1);
@@ -344,7 +306,7 @@ public class BlueSkyStone extends LinearOpMode {
                     robot.paddleTop.setPosition(0.655);
                     sleep(250);
 
-                    robot.backward(2300,1);
+                    robot.backward(2800,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -358,7 +320,7 @@ public class BlueSkyStone extends LinearOpMode {
 
                 } else {//strafe to final block]
 
-                    robot.backward(600,1);
+                    robot.backward(1000,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -368,16 +330,6 @@ public class BlueSkyStone extends LinearOpMode {
                     sleep(250);
 
                     robot.strafeRight(1100, 1);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
-
-                    //found sky stone
-                    robot.backward(400,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -398,6 +350,7 @@ public class BlueSkyStone extends LinearOpMode {
                     }
                     robot.allMotorsStop();
                     sleep(250);
+
                     //close paddle top
                     robot.paddleTop.setPosition(0.1);
                     sleep(250);
@@ -434,7 +387,7 @@ public class BlueSkyStone extends LinearOpMode {
                     robot.paddleTop.setPosition(0.655);
                     sleep(250);
 
-                    robot.backward(2300,1);
+                    robot.backward(1800,1);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -452,5 +405,3 @@ public class BlueSkyStone extends LinearOpMode {
         }
     }
 }
-
-

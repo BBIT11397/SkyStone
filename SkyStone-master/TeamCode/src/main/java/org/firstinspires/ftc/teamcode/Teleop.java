@@ -222,6 +222,14 @@ public class Teleop extends LinearOpMode {
                 telemetry.update();
             }
 
+            if (gamepad2.a){
+                robot.foundationGrabber.setPosition(0);
+            }
+
+            if (gamepad2.y){
+                robot.foundationGrabber.setPosition(1);
+            }
+
 /*
                 //  CHANGE TO GP 2?
                 if (myTimer.milliseconds() > 250) {
