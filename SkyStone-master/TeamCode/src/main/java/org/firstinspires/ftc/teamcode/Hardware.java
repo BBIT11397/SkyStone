@@ -57,7 +57,10 @@ public class Hardware {
     public Servo paddleTop     = null;
     public Servo jaw           = null;
     public Servo swing         = null;
-    public Servo foundationGrabber = null;
+    public Servo foundationGrabberR = null;
+    public Servo foundationGrabberL = null;
+    public Servo blockStopperR = null;
+    public Servo blocksStopperL = null;
 
   /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -95,7 +98,10 @@ public class Hardware {
         paddleTop   = hwMap.get(Servo.class,"paddleTop");
         jaw     = hwMap.get(Servo.class,"jaw");
         swing   = hwMap.get(Servo.class, "swing");
-        foundationGrabber = hwMap.get(Servo.class, "foundationGrabber");
+        foundationGrabberR = hwMap.get(Servo.class, "foundationGrabberR");
+        foundationGrabberL = hwMap.get(Servo.class, "foundationGrabberL");
+        blockStopperR = hwMap.get(Servo.class, "blockStopperR");
+        blocksStopperL = hwMap.get(Servo.class, "blockStopperL");
 
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
@@ -127,10 +133,13 @@ public class Hardware {
         leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leadScrew.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        paddleTop.setPosition(0);
-        swing.setPosition(.2);
+        paddleTop.setPosition(0.8);
+        swing.setPosition(0);
         jaw.setPosition(0.4);
-        //foundationGrabber.setPosition(0);
+        foundationGrabberR.setPosition(0);
+        foundationGrabberL.setPosition(1);
+        blockStopperR.setPosition(0);
+        blocksStopperL.setPosition(.655);
 
         telemetry.addData("hardware init:" , "exit");
         telemetry.update();
@@ -243,6 +252,16 @@ public class Hardware {
         rightFront.setPower(speed);
         leftFront.setPower(speed);
         leftBack.setPower(speed);
+    }
+
+    public void blockGrabbberUP(){
+        blockStopperR.setPosition(0);
+        blocksStopperL.setPosition(1);
+    }
+
+    public void blockGrabberDOWN(){
+        blockStopperR.setPosition(1);
+        blocksStopperL.setPosition(0);
     }
 
     public void foundSkyStone(){

@@ -180,7 +180,17 @@ public class Teleop extends LinearOpMode {
             }
 
             if (gamepad1.x) {
-                robot.paddleTop.setPosition(0.655) ;
+                robot.paddleTop.setPosition(0.8) ;
+            }
+
+            if (gamepad1.right_bumper){
+                robot.blockStopperR.setPosition(0);
+                robot.blocksStopperL.setPosition(1);
+            }
+
+            if (gamepad1.left_bumper){
+                robot.blockStopperR.setPosition(1);
+                robot.blocksStopperL.setPosition(0);
             }
 
             //SWING
@@ -223,11 +233,13 @@ public class Teleop extends LinearOpMode {
             }
 
             if (gamepad2.a){
-                robot.foundationGrabber.setPosition(0);
+                robot.foundationGrabberR.setPosition(0);
+                robot.foundationGrabberL.setPosition(1);
             }
 
             if (gamepad2.y){
-                robot.foundationGrabber.setPosition(1);
+                robot.foundationGrabberR.setPosition(1);
+                robot.foundationGrabberL.setPosition(0);
             }
 
 /*

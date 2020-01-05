@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Disabled
 @Autonomous(name="BlueSkyStone", group="bbit")
 public class BlueSkyStone extends LinearOpMode {
     /* Declare OpMode members. */
