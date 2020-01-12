@@ -16,7 +16,8 @@ public class REDSS extends LinearOpMode {
     double paddledown = 0;
 
     double power = 0.4;
-
+    int backupb4reverse = 1200;
+    int finalPark = 300;
     @Override
     public void runOpMode() {
         robot.init(hardwareMap, telemetry);
@@ -38,6 +39,8 @@ public class REDSS extends LinearOpMode {
             idle();
         }
         robot.allMotorsStop();
+
+        sleep(500);
 
         robot.forward(600, 0.25);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
@@ -103,7 +106,7 @@ public class REDSS extends LinearOpMode {
                 robot.paddleTop.setPosition(paddledown);
                 sleep(250);
 
-                robot.backward(2000, power);
+                robot.backward(backupb4reverse, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -115,15 +118,7 @@ public class REDSS extends LinearOpMode {
                 robot.blockGrabberDOWN();
                 sleep(250);
 
-                robot.setUpMotors();
-                robot.turnRight(1800, power);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
+                right90();
 
                 //over line
                 robot.setUpMotors();
@@ -145,6 +140,15 @@ public class REDSS extends LinearOpMode {
 
                 robot.setUpMotors();
                 robot.backward(1800, power);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                robot.strafeLeft(finalPark, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -192,7 +196,7 @@ public class REDSS extends LinearOpMode {
                 robot.paddleTop.setPosition(paddledown);
                 sleep(250);
 
-                robot.backward(2000, power);
+                robot.backward(backupb4reverse, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -204,15 +208,7 @@ public class REDSS extends LinearOpMode {
                 robot.blockGrabberDOWN();
                 sleep(250);
 
-                robot.setUpMotors();
-                robot.turnRight(1800, power);
-                while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                    telemetry.addLine()
-                            .addData("Task", "reline");
-                    idle();
-                }
-                robot.allMotorsStop();
-                sleep(250);
+                right90();
 
                 //over line
                 robot.setUpMotors();
@@ -239,6 +235,16 @@ public class REDSS extends LinearOpMode {
                     idle();
                 }
                 robot.allMotorsStop();
+                sleep(250);
+
+                robot.strafeLeft(finalPark, power);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+
             }
 
         } else {
@@ -268,7 +274,7 @@ public class REDSS extends LinearOpMode {
                     sleep(250);
 
                     robot.setUpMotors();
-                    robot.strafeLeft(500, power);
+                    robot.strafeLeft(200, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -289,7 +295,7 @@ public class REDSS extends LinearOpMode {
                     robot.paddleTop.setPosition(paddledown);
                     sleep(250);
 
-                    robot.backward(2000, power);
+                    robot.backward(backupb4reverse, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -301,15 +307,7 @@ public class REDSS extends LinearOpMode {
                     robot.blockGrabberDOWN();
                     sleep(250);
 
-                    robot.setUpMotors();
-                    robot.turnRight(1800, power);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
+                    right90();
 
                     robot.setUpMotors();
                     robot.forward(5500, power);
@@ -329,6 +327,15 @@ public class REDSS extends LinearOpMode {
 
                     robot.setUpMotors();
                     robot.backward(1800, power);
+                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                        telemetry.addLine()
+                                .addData("Task", "reline");
+                        idle();
+                    }
+                    robot.allMotorsStop();
+                    sleep(250);
+
+                    robot.strafeLeft(finalPark, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -373,7 +380,7 @@ public class REDSS extends LinearOpMode {
                     robot.paddleTop.setPosition(paddledown);
                     sleep(250);
 
-                    robot.backward(2000, power);
+                    robot.backward(backupb4reverse, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -385,15 +392,7 @@ public class REDSS extends LinearOpMode {
                     robot.blockGrabberDOWN();
                     sleep(250);
 
-                    robot.setUpMotors();
-                    robot.turnRight(1800, power);
-                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
-                        telemetry.addLine()
-                                .addData("Task", "reline");
-                        idle();
-                    }
-                    robot.allMotorsStop();
-                    sleep(250);
+                    right90();
 
                     robot.setUpMotors();
                     robot.forward(6200, power);
@@ -419,8 +418,29 @@ public class REDSS extends LinearOpMode {
                         idle();
                     }
                     robot.allMotorsStop();
+                    sleep(250);
+
+                    robot.strafeLeft(finalPark, power);
+                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                        telemetry.addLine()
+                                .addData("Task", "reline");
+                        idle();
+                    }
+                    robot.allMotorsStop();
                 }
             }
         }
+    }
+
+    public void right90(){
+        robot.setUpMotors();
+        robot.turnRight(1900, power);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
     }
 }
