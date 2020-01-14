@@ -242,6 +242,23 @@ public class Teleop extends LinearOpMode {
                 robot.foundationGrabberL.setPosition(0);
             }
 
+            if (gamepad2.x){
+                robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.leadScrew.setTargetPosition(4000);
+                robot.leadScrew.setPower(1);
+                while (robot.leadScrew.isBusy()) {
+                    telemetry.addLine()
+                            .addData("Task", "LeadScrew Out");
+                    idle();
+                }
+                robot.leadScrew.setPower(0);
+                sleep(250);
+
+                robot.swing.setPosition(1);
+
+                robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+
 /*
                 //  CHANGE TO GP 2?
                 if (myTimer.milliseconds() > 250) {
@@ -280,15 +297,6 @@ public class Teleop extends LinearOpMode {
                 if (gamepad2.a) {
                     robot.leveler.setPosition(0);
                 }
-
-
-            if (gamepad1.left_bumper) {
-                robot.paddleLeft.setPosition(0);
-            }
-
-            if (gamepad1.right_bumper){
-                robot.paddleLeft.setPosition(0.7);
-            }
 */
             }
         }
