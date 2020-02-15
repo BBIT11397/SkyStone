@@ -93,7 +93,7 @@ public class BLUESS extends LinearOpMode {
                 robot.allMotorsStop();
                 sleep(250);
 
-                robot.forward(1250, power);
+                robot.forward(800, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -141,7 +141,7 @@ public class BLUESS extends LinearOpMode {
                 }
                 robot.allMotorsStop();
 
-                robot.backward(1000, power);
+                robot.backward(700, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -164,6 +164,7 @@ public class BLUESS extends LinearOpMode {
 
                 backOnLine();
                 robot.allMotorsStop();
+
             }
 
         } else {
@@ -196,7 +197,7 @@ public class BLUESS extends LinearOpMode {
                     robot.allMotorsStop();
 
                     robot.setUpMotors();
-                    robot.backward(400, power);
+                  /*  robot.backward(400, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -204,6 +205,7 @@ public class BLUESS extends LinearOpMode {
                     }
                     robot.allMotorsStop();
                     sleep(250);
+                   */
 
                     captureSkystone();
 
@@ -243,7 +245,7 @@ public class BLUESS extends LinearOpMode {
                     }
                     robot.allMotorsStop();
 
-                    robot.backward(1000, power);
+                    robot.backward(700, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -299,7 +301,7 @@ public class BLUESS extends LinearOpMode {
         robot.fingerGrab();
         sleep(250);
 
-        robot.strafeRight(1500, power);
+        robot.strafeRight(1000, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");

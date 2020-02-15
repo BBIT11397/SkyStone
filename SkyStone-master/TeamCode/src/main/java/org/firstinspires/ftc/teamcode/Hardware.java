@@ -308,8 +308,8 @@ public class Hardware {
     }
 
     public void handDown() {
-        stoneHand.setPosition(.7);
         stoneFinger.setPosition(.7);
+        stoneHand.setPosition(.7);
     }
 
     public void handDownWithStone() {
