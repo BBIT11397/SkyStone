@@ -90,10 +90,18 @@ public class Teleop extends LinearOpMode {
 
         boolean swingArmMoving = false;
         boolean grabberDown = false;
+        boolean leftTriggerPressed = false;
+        boolean rightTriggerPressed = false;
+
+        int armLevel;
 
         ElapsedTime x2Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         x2Timer.reset();
+
+        ElapsedTime dpad2Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+        dpad2Timer.reset();
 
         robot.init(hardwareMap, telemetry);
 
@@ -110,6 +118,8 @@ public class Teleop extends LinearOpMode {
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         grabberDown = false;
+
+        armLevel = -1;
 
         waitForStart();
 
@@ -169,27 +179,110 @@ public class Teleop extends LinearOpMode {
                 robot.jaw.setPosition(0.1);
             }
 
+            if (gamepad2.dpad_up && dpad2Timer.milliseconds() > 500) {
+                if (armLevel < 4) {
+                    armLevel += 1;
+                }
+                dpad2Timer.reset();
+            }
 
-            //ARM MOTOR
-            if (gamepad1.dpad_down || gamepad1.dpad_up) {
-                if (gamepad1.dpad_down ) {
-                    currentARMPosition = robot.armMotor.getCurrentPosition();
-                    if (currentARMPosition <= 1100) {
-                        robot.armMotor.setPower(powerDown);
-                    } else {
-                        robot.armMotor.setPower(0);
+            if (gamepad2.dpad_down && dpad2Timer.milliseconds() > 500) {
+                if (armLevel > 0){
+                    armLevel -= 1;
+                }
+                dpad2Timer.reset();
+            }
+
+            //leadscrew
+            if (rightTriggerPressed == true|| leftTriggerPressed == true || armLevel <= 4 || armLevel >= 0) {
+                if (rightTriggerPressed == true|| leftTriggerPressed == true ) {
+                    armLevel = -1;
+                    if (rightTriggerPressed == true) {
+                        currentLSPosition = robot.leadScrew.getCurrentPosition();
+                        if (currentLSPosition <= 11600) {
+                            robot.leadScrew.setPower(1);
+                        } else {
+                            robot.leadScrew.setPower(0);
+                        }
+                    }
+                    if (leftTriggerPressed == true) {
+                        currentLSPosition = robot.leadScrew.getCurrentPosition();
+                        if (currentLSPosition >= 300) {
+                            robot.leadScrew.setPower(-1);
+                        } else {
+                            robot.leadScrew.setPower(0);
+                        }
                     }
                 }
-                if (gamepad1.dpad_up) {
-                    currentARMPosition = robot.armMotor.getCurrentPosition();
-                    if (currentARMPosition >= -6000) {
-                        robot.armMotor.setPower(powerUp);
-                    } else {
-                        robot.armMotor.setPower(0);
+                if (armLevel == 0){
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.leadScrew.setTargetPosition();
+                }
+                if (armLevel == 1){
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.leadScrew.setTargetPosition();
+                }
+                if (armLevel == 2){
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.leadScrew.setTargetPosition();
+                }
+                if (armLevel == 3){
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.leadScrew.setTargetPosition();
+                }
+                if (armLevel == 4){
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.leadScrew.setTargetPosition();
+                }
+            } else {
+                robot.leadScrew.setPower(0);
+                robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+
+            //ARM MOTOR
+            if (gamepad1.dpad_down || gamepad1.dpad_up || armLevel <= 4|| armLevel >= 0) {
+                if (gamepad1.dpad_down || gamepad1.dpad_up ) {
+                    armLevel = -1;
+                    if (gamepad1.dpad_down) {
+                        currentARMPosition = robot.armMotor.getCurrentPosition();
+                        if (currentARMPosition <= 1100) {
+                            robot.armMotor.setPower(powerDown);
+                        } else {
+                            robot.armMotor.setPower(0);
+                        }
                     }
+                    if (gamepad1.dpad_up) {
+                        currentARMPosition = robot.armMotor.getCurrentPosition();
+                        if (currentARMPosition >= -6000) {
+                            robot.armMotor.setPower(powerUp);
+                        } else {
+                            robot.armMotor.setPower(0);
+                        }
+                    }
+                }
+                if (armLevel == 0){
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.armMotor.setTargetPosition();
+                }
+                if (armLevel == 1){
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.armMotor.setTargetPosition();
+                }
+                if (armLevel == 2){
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.armMotor.setTargetPosition();
+                }
+                if (armLevel == 3){
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.armMotor.setTargetPosition();
+                }
+                if (armLevel == 4){
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.armMotor.setTargetPosition();
                 }
             } else {
                 robot.armMotor.setPower(0);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
 
@@ -213,26 +306,18 @@ public class Teleop extends LinearOpMode {
                 robot.swing.setPosition(.22);
             }
 
-            if (gamepad2.dpad_up || gamepad2.dpad_down) {
-                if (gamepad2.dpad_up) {
-                    currentLSPosition = robot.leadScrew.getCurrentPosition();
-                    if (currentLSPosition <= 11600) {
-                        robot.leadScrew.setPower(1);
-                    } else {
-                        robot.leadScrew.setPower(0);
-                    }
-                }
-                if (gamepad2.dpad_down) {
-                    currentLSPosition = robot.leadScrew.getCurrentPosition();
-                    if (currentLSPosition >= 300){
-                        robot.leadScrew.setPower(-1);
-                    } else {
-                        robot.leadScrew.setPower(0);
-                    }
-                }
+            if (gamepad2.left_trigger > 0){
+                leftTriggerPressed = true;
             } else {
-                robot.leadScrew.setPower(0);
+                leftTriggerPressed = false;
             }
+
+            if (gamepad2.right_trigger > 0){
+                rightTriggerPressed = true;
+            } else {
+                rightTriggerPressed = false;
+            }
+
 
             if (gamepad2.a){
                 if (x2Timer.milliseconds() > 500) {
@@ -254,10 +339,15 @@ public class Teleop extends LinearOpMode {
                 robot.stoneStart();
             }
 
+
+            telemetry.addLine()
+                    .addData("timer", dpad2Timer.milliseconds());
             telemetry.addLine()
                     .addData("arm motor", robot.armMotor.getCurrentPosition());
             telemetry.addLine()
                     .addData("lead Screw", robot.leadScrew.getCurrentPosition());
+            telemetry.addLine()
+                    .addData("arm Level", armLevel);
             telemetry.update();
 
 /*

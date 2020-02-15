@@ -329,5 +329,4 @@ public class Hardware {
         stoneHand.setPosition(.2);
         stoneFinger.setPosition(.425);
     }
-
 }
