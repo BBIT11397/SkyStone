@@ -75,7 +75,7 @@ public class REDSS extends LinearOpMode {
                 telemetry.addData("first", "first");
                 telemetry.update();
 
-                robot.backward(250, power);
+                robot.backward(600, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -84,7 +84,16 @@ public class REDSS extends LinearOpMode {
                 robot.allMotorsStop();
                 sleep(250);
 
-                robot.strafeRight(500, power);
+                robot.turnLeft(1900, power);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
+                sleep(250);
+
+                robot.backward(1250, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -97,7 +106,7 @@ public class REDSS extends LinearOpMode {
 
                 //over line
                 robot.setUpMotors();
-                robot.forward(4500, power);
+                robot.backward(4500, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -108,6 +117,7 @@ public class REDSS extends LinearOpMode {
 
                 backOnLine();
                 robot.allMotorsStop();
+
             } else {
 
                 //First;Third
@@ -126,7 +136,7 @@ public class REDSS extends LinearOpMode {
                 robot.allMotorsStop();
                 sleep(500);
 
-                robot.strafeLeft(1100, power);
+                robot.turnLeft(1900, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -134,13 +144,19 @@ public class REDSS extends LinearOpMode {
                 }
                 robot.allMotorsStop();
 
-                sleep(250);
+                robot.forward(700, power);
+                while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                    telemetry.addLine()
+                            .addData("Task", "reline");
+                    idle();
+                }
+                robot.allMotorsStop();
 
                 captureSkystone();
 
                 //over line
                 robot.setUpMotors();
-                robot.forward(6100, power);
+                robot.backward(6100, power);
                 while (robot.checkMotorIsBusy() && opModeIsActive()) {
                     telemetry.addLine()
                             .addData("Task", "reline");
@@ -164,7 +180,7 @@ public class REDSS extends LinearOpMode {
                     sleep(100);
 
                     robot.setUpMotors();
-                    robot.backward(250, power);
+                    robot.backward(500, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "backward");
@@ -174,8 +190,16 @@ public class REDSS extends LinearOpMode {
                     robot.allMotorsStop();
                     sleep(250);
 
+                    robot.turnLeft(1900, power);
+                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                        telemetry.addLine()
+                                .addData("Task", "reline");
+                        idle();
+                    }
+                    robot.allMotorsStop();
+
                     robot.setUpMotors();
-                    robot.strafeLeft(200, power);
+                    robot.forward(200, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -187,7 +211,7 @@ public class REDSS extends LinearOpMode {
                     captureSkystone();
 
                     robot.setUpMotors();
-                    robot.forward(5500, power);
+                    robot.backward(5500, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -204,29 +228,38 @@ public class REDSS extends LinearOpMode {
                     telemetry.addData("second", "third");
                     telemetry.update();
 
-                    robot.setUpMotors();
                     robot.backward(reverseFromBlocks + 300, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
-                                .addData("Task", "reline");
+                                .addData("Task", "backward");
+                        telemetry.update();
                         idle();
                     }
                     robot.allMotorsStop();
-                    sleep(250);
+                    sleep(500);
 
-                    robot.strafeLeft(1100, power);
+                    robot.turnLeft(1900, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
                         idle();
                     }
                     robot.allMotorsStop();
-                    sleep(250);
+
+                    robot.forward(400, power);
+                    while (robot.checkMotorIsBusy() && opModeIsActive()) {
+                        telemetry.addLine()
+                                .addData("Task", "reline");
+                        idle();
+                    }
+                    robot.allMotorsStop();
 
                     captureSkystone();
+                    sleep(250);
 
+                    //over line
                     robot.setUpMotors();
-                    robot.forward(6200, power);
+                    robot.backward(6100, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -255,7 +288,10 @@ public class REDSS extends LinearOpMode {
     }
 
     public void captureSkystone(){
-        robot.forward(900, power);
+        robot.handDown();
+        sleep(500);
+
+        robot.strafeLeft(700, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -264,10 +300,10 @@ public class REDSS extends LinearOpMode {
         robot.allMotorsStop();
         sleep(250);
 
-        robot.paddleTop.setPosition(paddledown);
+        robot.fingerGrab();
         sleep(250);
 
-        robot.backward(backupb4reverse, power);
+        robot.strafeRight(1500, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -275,22 +311,18 @@ public class REDSS extends LinearOpMode {
         }
         robot.allMotorsStop();
         sleep(250);
-
-        robot.blockGrabberDOWN();
-        sleep(250);
-
-        right90();
     }
 
     public void backOnLine(){
         //open top paddle
-        robot.paddleTop.setPosition(paddleUP);
+        robot.fingerRelease();
+        sleep(250);
 
-        robot.blockGrabbberUP();
+        robot.stoneStart();
         sleep(250);
 
         robot.setUpMotors();
-        robot.backward(1800, power);
+        robot.forward(2400, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
