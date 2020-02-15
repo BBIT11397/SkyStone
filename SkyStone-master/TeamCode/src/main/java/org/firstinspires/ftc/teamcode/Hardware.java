@@ -47,24 +47,27 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hardware {
     /* Public OpMode members. */
-    public DcMotor leftFront   = null;
-    public DcMotor leftBack    = null;
-    public DcMotor rightFront  = null;
-    public DcMotor rightBack   = null;
-    public DcMotor armMotor    = null;
-    public DcMotor leadScrew   = null;
+    public DcMotor leftFront        = null;
+    public DcMotor leftBack         = null;
+    public DcMotor rightFront       = null;
+    public DcMotor rightBack        = null;
+    public DcMotor armMotor         = null;
+    public DcMotor leadScrew        = null;
 
-    public Servo paddleTop     = null;
-    public Servo jaw           = null;
-    public Servo swing         = null;
+    public Servo jaw                = null;
+    public Servo swing              = null;
     public Servo foundationGrabberR = null;
     public Servo foundationGrabberL = null;
-    public Servo blockStopperR = null;
-    public Servo blocksStopperL = null;
+    public Servo stoneHand          = null;
+    public Servo stoneFinger        = null;
 
-  /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    public Servo paddleTop          = null;
+    public Servo blockStopperR      = null;
+    public Servo blocksStopperL     = null;
+
+    /* local OpMode members. */
+    HardwareMap hwMap               =  null;
+    private ElapsedTime period      = new ElapsedTime();
     private Telemetry telemetry;
 
     public ColorSensor colorSensorRight;
@@ -95,13 +98,16 @@ public class Hardware {
         armMotor    = hwMap.get(DcMotor.class, "armMotor");
         leadScrew   = hwMap.get(DcMotor.class,"leadScrew");
 
-        paddleTop   = hwMap.get(Servo.class,"paddleTop");
         jaw     = hwMap.get(Servo.class,"jaw");
         swing   = hwMap.get(Servo.class, "swing");
         foundationGrabberR = hwMap.get(Servo.class, "foundationGrabberR");
         foundationGrabberL = hwMap.get(Servo.class, "foundationGrabberL");
-        blockStopperR = hwMap.get(Servo.class, "blockStopperR");
-        blocksStopperL = hwMap.get(Servo.class, "blockStopperL");
+        stoneHand = hwMap.get(Servo.class, "stoneHand");
+        stoneFinger = hwMap.get(Servo.class, "stoneFinger");
+
+        //paddleTop   = hwMap.get(Servo.class,"paddleTop");
+        //blockStopperR = hwMap.get(Servo.class, "blockStopperR");
+        //blocksStopperL = hwMap.get(Servo.class, "blockStopperL");
 
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
@@ -120,6 +126,7 @@ public class Hardware {
         armMotor.setPower(0);
         leadScrew.setPower(0);
 
+
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -127,19 +134,24 @@ public class Hardware {
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leadScrew.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        paddleTop.setPosition(0.8);
-        swing.setPosition(0);
-        jaw.setPosition(0.4);
+        swing.setPosition(0.2);
+        jaw.setPosition(0.1);
         foundationGrabberR.setPosition(0);
         foundationGrabberL.setPosition(1);
-        blockStopperR.setPosition(0);
-        blocksStopperL.setPosition(.655);
+
+        //init stone hand and finger
+        stoneStart();
+
+        //paddleTop.setPosition(0.8);
+        //blockStopperR.setPosition(0);
+        //blocksStopperL.setPosition(.655);
 
         telemetry.addData("hardware init:" , "exit");
         telemetry.update();
@@ -289,4 +301,33 @@ public class Hardware {
         backward(500,1);
         allMotorsStop();
     }
+
+    public void stoneStart(){
+        stoneHand.setPosition(.2);
+        stoneFinger.setPosition(0);
+    }
+
+    public void handDown() {
+        stoneHand.setPosition(.7);
+        stoneFinger.setPosition(.7);
+    }
+
+    public void handDownWithStone() {
+        stoneHand.setPosition(.7);
+        stoneFinger.setPosition(.425);
+    }
+
+    public void fingerGrab() {
+        stoneFinger.setPosition(.425);
+    }
+
+    public void fingerRelease() {
+        stoneFinger.setPosition(1);
+    }
+
+    public  void handUpWithStone() {
+        stoneHand.setPosition(.2);
+        stoneFinger.setPosition(.425);
+    }
+
 }

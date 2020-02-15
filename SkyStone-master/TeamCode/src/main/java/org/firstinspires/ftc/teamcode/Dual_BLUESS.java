@@ -133,7 +133,7 @@ public class Dual_BLUESS extends LinearOpMode {
                 }
                 robot.allMotorsStop();
                 sleep(250);
-                
+
                 //open top paddle
                 robot.paddleTop.setPosition(paddleUP);
 
