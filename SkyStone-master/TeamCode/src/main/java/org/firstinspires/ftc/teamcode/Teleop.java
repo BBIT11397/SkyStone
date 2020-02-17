@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import android.nfc.cardemulation.OffHostApduService;
+import android.sax.TextElementListener;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -78,6 +79,8 @@ public class Teleop extends LinearOpMode {
         double currentLevelPosition;
         double currentLSPosition;
         int currentARMPosition;
+        int armLeadLevelPosition = 0;
+        int armMotorLevelPosition = 0 ;
         int newARMPositon = 0;
 
         double powerDown = 1;
@@ -172,7 +175,7 @@ public class Teleop extends LinearOpMode {
 
 
             if (gamepad1.y) {
-                robot.jaw.setPosition(0.);
+                robot.jaw.setPosition(0.7);
             }
 
             if (gamepad1.a) {
@@ -180,7 +183,7 @@ public class Teleop extends LinearOpMode {
             }
 
             if (gamepad2.dpad_up && dpad2Timer.milliseconds() > 500) {
-                if (armLevel < 4) {
+                if (armLevel < 3) {
                     armLevel += 1;
                 }
                 dpad2Timer.reset();
@@ -193,10 +196,11 @@ public class Teleop extends LinearOpMode {
                 dpad2Timer.reset();
             }
 
-            //leadscrew
-            if (rightTriggerPressed == true|| leftTriggerPressed == true || armLevel <= 4 || armLevel >= 0) {
+                //leadscrew
+            if (rightTriggerPressed == true|| leftTriggerPressed == true || armLevel <= 3 || armLevel >= 0) {
                 if (rightTriggerPressed == true|| leftTriggerPressed == true ) {
                     armLevel = -1;
+                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     if (rightTriggerPressed == true) {
                         currentLSPosition = robot.leadScrew.getCurrentPosition();
                         if (currentLSPosition <= 11600) {
@@ -213,39 +217,36 @@ public class Teleop extends LinearOpMode {
                             robot.leadScrew.setPower(0);
                         }
                     }
+                } else {
+                    if (armLevel == -1){
+                        robot.leadScrew.setPower(0);
+                    }
                 }
-                if (armLevel == 0){
-                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.leadScrew.setTargetPosition();
-                }
-                if (armLevel == 1){
-                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.leadScrew.setTargetPosition();
-                }
-                if (armLevel == 2){
-                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.leadScrew.setTargetPosition();
-                }
-                if (armLevel == 3){
-                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.leadScrew.setTargetPosition();
-                }
-                if (armLevel == 4){
-                    robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.leadScrew.setTargetPosition();
+
+                if (armLevel >= 0){
+                    armLeadLevelPosition = robot.leadScrew.getCurrentPosition();
+                    if(armLeadLevelPosition <= 3263 && armLeadLevelPosition >= 2863){
+                        robot.leadScrew.setPower(0);
+                    } else {
+                        robot.leadScrew.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        if (robot.leadScrew.getTargetPosition() != 3063){
+                            robot.leadScrew.setTargetPosition(3063);
+                            robot.leadScrew.setPower(1);
+                        }
+                    }
                 }
             } else {
                 robot.leadScrew.setPower(0);
-                robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
             //ARM MOTOR
-            if (gamepad1.dpad_down || gamepad1.dpad_up || armLevel <= 4|| armLevel >= 0) {
+            if (gamepad1.dpad_down || gamepad1.dpad_up || armLevel <= 3|| armLevel >= 0) {
                 if (gamepad1.dpad_down || gamepad1.dpad_up ) {
                     armLevel = -1;
+                    robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     if (gamepad1.dpad_down) {
                         currentARMPosition = robot.armMotor.getCurrentPosition();
-                        if (currentARMPosition <= 1100) {
+                        if (currentARMPosition <= 2100) {
                             robot.armMotor.setPower(powerDown);
                         } else {
                             robot.armMotor.setPower(0);
@@ -259,11 +260,25 @@ public class Teleop extends LinearOpMode {
                             robot.armMotor.setPower(0);
                         }
                     }
+                } else {
+                    if (armLevel == -1) {
+                        robot.armMotor.setPower(0);
+                    }
                 }
+
                 if (armLevel == 0){
-                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.armMotor.setTargetPosition();
+                    armMotorLevelPosition = robot.armMotor.getCurrentPosition();
+                    if(armMotorLevelPosition >= 1900 && armMotorLevelPosition <= 2300){
+                        robot.armMotor.setPower(0);
+                    } else {
+                        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        if(robot.armMotor.getTargetPosition()!= 2100){
+                            robot.armMotor.setTargetPosition(2100);
+                            robot.armMotor.setPower(1);
+                        }
+                    }
                 }
+                /*
                 if (armLevel == 1){
                     robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     robot.armMotor.setTargetPosition();
@@ -276,13 +291,11 @@ public class Teleop extends LinearOpMode {
                     robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     robot.armMotor.setTargetPosition();
                 }
-                if (armLevel == 4){
-                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.armMotor.setTargetPosition();
-                }
+
+                 */
+
             } else {
                 robot.armMotor.setPower(0);
-                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
 
@@ -339,7 +352,8 @@ public class Teleop extends LinearOpMode {
                 robot.stoneStart();
             }
 
-
+            telemetry.addLine()
+                    .addData("armLeadLevelPosition", armLeadLevelPosition);
             telemetry.addLine()
                     .addData("timer", dpad2Timer.milliseconds());
             telemetry.addLine()
