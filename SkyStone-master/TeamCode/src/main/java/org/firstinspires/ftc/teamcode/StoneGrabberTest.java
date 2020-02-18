@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Disabled
 @Autonomous(name="StoneGrabberTest", group="bbit")
 public class StoneGrabberTest extends LinearOpMode {
     /* Declare OpMode members. */

@@ -329,4 +329,14 @@ public class Hardware {
         stoneHand.setPosition(.2);
         stoneFinger.setPosition(.425);
     }
+
+    public void foundationGrabberDown() {
+        foundationGrabberR.setPosition(.55);
+        foundationGrabberL.setPosition(.4);
+    }
+
+    public void foundationGrabberUp() {
+        foundationGrabberR.setPosition(0);
+        foundationGrabberL.setPosition(1);
+    }
 }

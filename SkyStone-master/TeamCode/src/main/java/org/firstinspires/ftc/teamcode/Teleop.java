@@ -102,6 +102,14 @@ public class Teleop extends LinearOpMode {
 
         x2Timer.reset();
 
+        ElapsedTime y2Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+        y2Timer.reset();
+
+        ElapsedTime a2Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+        a2Timer.reset();
+
         ElapsedTime dpad2Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         dpad2Timer.reset();
@@ -154,17 +162,17 @@ public class Teleop extends LinearOpMode {
 
             if (strafeLeft != 0 || strafeRight != 0) {
                 if (strafeLeft != 0) {
-                    robot.rightBack.setPower(strafeLeft);
-                    robot.rightFront.setPower(-strafeLeft);
-                    robot.leftFront.setPower(strafeLeft);
-                    robot.leftBack.setPower(-strafeLeft);
+                    robot.rightBack.setPower(-strafeLeft);
+                    robot.rightFront.setPower(strafeLeft);
+                    robot.leftFront.setPower(-strafeLeft);
+                    robot.leftBack.setPower(strafeLeft);
                 }
 
                 if (strafeRight != 0) {
-                    robot.leftFront.setPower(-strafeRight);
-                    robot.leftBack.setPower(strafeRight);
-                    robot.rightBack.setPower(-strafeRight);
-                    robot.rightFront.setPower(strafeRight);
+                    robot.leftFront.setPower(strafeRight);
+                    robot.leftBack.setPower(-strafeRight);
+                    robot.rightBack.setPower(strafeRight);
+                    robot.rightFront.setPower(-strafeRight);
                 }
             } else {
                 robot.leftBack.setPower(left);
@@ -331,21 +339,42 @@ public class Teleop extends LinearOpMode {
                 rightTriggerPressed = false;
             }
 
-
-            if (gamepad2.a){
-                if (x2Timer.milliseconds() > 500) {
-                    if(grabberDown == true) {
-                        robot.foundationGrabberR.setPosition(0);
-                        robot.foundationGrabberL.setPosition(1);
-                        grabberDown = false;
-                    }
-                    if (grabberDown == false){
-                        robot.foundationGrabberR.setPosition(.6);
-                        robot.foundationGrabberL.setPosition(.4);
-                        grabberDown = true;
-                    }
-                    x2Timer.reset();
+            if (gamepad2.y && y2Timer.milliseconds() > 500){
+                if(grabberDown) {
+                    robot.foundationGrabberR.setPosition(0);
+                    robot.foundationGrabberL.setPosition(1);
+                    grabberDown = false;
+                } else {
+                //if (grabberDown == false){
+                    robot.foundationGrabberR.setPosition(.55);
+                    robot.foundationGrabberL.setPosition(.4);
+                    grabberDown = true;
                 }
+                y2Timer.reset();
+            }
+
+            if (gamepad2.x && x2Timer.milliseconds() > 500){
+                if(grabberDown) {
+                    robot.foundationGrabberL.setPosition(1);
+                    grabberDown = false;
+                } else {
+                    //if (grabberDown == false){
+                    robot.foundationGrabberL.setPosition(.4);
+                    grabberDown = true;
+                }
+                x2Timer.reset();
+            }
+
+            if (gamepad2.a && a2Timer.milliseconds() > 500){
+                if(grabberDown) {
+                    robot.foundationGrabberR.setPosition(0);
+                    grabberDown = false;
+                } else {
+                    //if (grabberDown == false){
+                    robot.foundationGrabberR.setPosition(.55);
+                    grabberDown = true;
+                }
+                a2Timer.reset();
             }
 
             if(gamepad1.b){
