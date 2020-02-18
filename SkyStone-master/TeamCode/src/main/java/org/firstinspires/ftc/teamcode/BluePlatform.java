@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="RedPlatform", group="bbit")
-public class RedPlatform extends LinearOpMode {
+@Autonomous(name="BluePlatform", group="bbit")
+public class BluePlatform extends LinearOpMode {
     /* Declare OpMode members. */
     Hardware robot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -69,7 +69,7 @@ public class RedPlatform extends LinearOpMode {
         }
         robot.allMotorsStop();
 
-        robot.turnRight(5000, 1);
+        robot.turnLeft(5000, 1);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -90,7 +90,7 @@ public class RedPlatform extends LinearOpMode {
         robot.foundationGrabberUp();
         sleep(250);
 
-        robot.strafeRight(1500, 1);
+        robot.strafeLeft(1500, 1);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
