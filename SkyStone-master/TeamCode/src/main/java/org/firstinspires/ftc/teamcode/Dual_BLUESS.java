@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Disabled
 @Autonomous(name="Dual_BLUESS", group="bbit")
 public class Dual_BLUESS extends LinearOpMode {
     /* Declare OpMode members. */

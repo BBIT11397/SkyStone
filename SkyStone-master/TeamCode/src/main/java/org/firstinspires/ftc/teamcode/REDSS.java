@@ -17,7 +17,7 @@ public class REDSS extends LinearOpMode {
 
     double power = 0.4;
     int backupb4reverse = 1200;
-    int finalPark = 300;
+    int finalPark = 900;
     int reverseFromBlocks = 250;
     @Override
     public void runOpMode() {
@@ -199,7 +199,7 @@ public class REDSS extends LinearOpMode {
                     robot.allMotorsStop();
 
                     robot.setUpMotors();
-                    robot.forward(200, power);
+                    robot.backward(500, power);
                     while (robot.checkMotorIsBusy() && opModeIsActive()) {
                         telemetry.addLine()
                                 .addData("Task", "reline");
@@ -318,7 +318,7 @@ public class REDSS extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(250);
 
         robot.setUpMotors();

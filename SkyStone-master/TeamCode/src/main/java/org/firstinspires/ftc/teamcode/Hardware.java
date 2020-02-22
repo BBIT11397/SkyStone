@@ -307,6 +307,11 @@ public class Hardware {
         stoneFinger.setPosition(0);
     }
 
+    public void handUp(){
+        stoneHand.setPosition(0);
+        stoneFinger.setPosition(0);
+    }
+
     public void handDown() {
         stoneFinger.setPosition(.7);
         stoneHand.setPosition(.7);
@@ -318,7 +323,7 @@ public class Hardware {
     }
 
     public void fingerGrab() {
-        stoneFinger.setPosition(.425);
+        stoneFinger.setPosition(.3);
     }
 
     public void fingerRelease() {
@@ -326,7 +331,7 @@ public class Hardware {
     }
 
     public  void handUpWithStone() {
-        stoneHand.setPosition(.2);
+        stoneHand.setPosition(0);
         stoneFinger.setPosition(.425);
     }
 

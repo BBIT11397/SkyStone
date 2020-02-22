@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Disabled
 @Autonomous(name="Dual_REDSS", group="bbit")
 public class Dual_REDSS extends LinearOpMode {
     /* Declare OpMode members. */

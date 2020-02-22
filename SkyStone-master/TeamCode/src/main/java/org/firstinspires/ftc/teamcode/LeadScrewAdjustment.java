@@ -23,11 +23,23 @@ public class LeadScrewAdjustment extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            if (gamepad1.dpad_down) {
-                robot.leadScrew.setPower(-1);
+            if (gamepad1.dpad_down || gamepad1.dpad_up){
+                if (gamepad1.dpad_down) {
+                    robot.leadScrew.setPower(-1);
+                } else {
+                    robot.leadScrew.setPower(0);
+                }
+                if (gamepad1.dpad_up) {
+                    robot.leadScrew.setPower(1);
+                } else {
+                    robot.leadScrew.setPower(0);
+                }
             } else {
                 robot.leadScrew.setPower(0);
             }
+            telemetry.addLine()
+                    .addData("lead Screw", robot.leadScrew.getCurrentPosition());
+            telemetry.update();
         }
     }
 }

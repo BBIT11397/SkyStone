@@ -1,14 +1,12 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-@Disabled
-@Autonomous(name="RightMiddle", group="bbit")
-public class RightMiddle extends LinearOpMode {
+
+@Autonomous(name="StrafeRightWall", group="bbit")
+public class StrafeRightWall extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware robot = new Hardware();
@@ -60,34 +58,10 @@ public class RightMiddle extends LinearOpMode {
         waitForStart();
 
         setUpMotors();
-        robot.leftFront.setTargetPosition(2000);
-        robot.leftBack.setTargetPosition(2000);
-        robot.rightBack.setTargetPosition(2000);
-        robot.rightFront.setTargetPosition(2000);
-
-        robot.rightBack.setPower(1);
-        robot.rightFront.setPower(1);
-        robot.leftFront.setPower(1);
-        robot.leftBack.setPower(1);
-
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "reline");
-            idle();
-        }
-
-        robot.leftFront.setPower(0);
-        robot.leftBack.setPower(0);
-        robot.rightBack.setPower(0);
-        robot.rightFront.setPower(0);
-
-        sleep(2000);
-
-        setUpMotors();
-        robot.leftFront.setTargetPosition(3900);
-        robot.leftBack.setTargetPosition(-3900);
-        robot.rightBack.setTargetPosition(3900);
-        robot.rightFront.setTargetPosition(-3900);
+        robot.leftFront.setTargetPosition(4700);
+        robot.leftBack.setTargetPosition(-4700);
+        robot.rightBack.setTargetPosition(4700);
+        robot.rightFront.setTargetPosition(-4700);
 
         robot.rightBack.setPower(1);
         robot.rightFront.setPower(1);
@@ -154,4 +128,3 @@ public class RightMiddle extends LinearOpMode {
         robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }
-

@@ -17,7 +17,7 @@ public class BLUESS extends LinearOpMode {
 
     double power = 0.4;
     int backupb4reverse = 1200;
-    int finalPark = 500;
+    int finalPark = 900;
     int reverseFromBlocks = 250;
     @Override
     public void runOpMode() {
@@ -316,7 +316,7 @@ public class BLUESS extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(250);
 
         robot.setUpMotors();

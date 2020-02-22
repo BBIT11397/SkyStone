@@ -211,7 +211,7 @@ public class Teleop extends LinearOpMode {
                     robot.leadScrew.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     if (rightTriggerPressed == true) {
                         currentLSPosition = robot.leadScrew.getCurrentPosition();
-                        if (currentLSPosition <= 11600) {
+                        if (currentLSPosition <= 12900) {
                             robot.leadScrew.setPower(1);
                         } else {
                             robot.leadScrew.setPower(0);
@@ -230,6 +230,7 @@ public class Teleop extends LinearOpMode {
                         robot.leadScrew.setPower(0);
                     }
                 }
+                /*
 
                 if (armLevel >= 0){
                     armLeadLevelPosition = robot.leadScrew.getCurrentPosition();
@@ -241,8 +242,11 @@ public class Teleop extends LinearOpMode {
                             robot.leadScrew.setTargetPosition(3063);
                             robot.leadScrew.setPower(1);
                         }
+
                     }
                 }
+
+                 */
             } else {
                 robot.leadScrew.setPower(0);
             }
@@ -274,6 +278,7 @@ public class Teleop extends LinearOpMode {
                     }
                 }
 
+                /*
                 if (armLevel == 0){
                     armMotorLevelPosition = robot.armMotor.getCurrentPosition();
                     if(armMotorLevelPosition >= 1900 && armMotorLevelPosition <= 2300){
@@ -286,6 +291,8 @@ public class Teleop extends LinearOpMode {
                         }
                     }
                 }
+
+                 */
                 /*
                 if (armLevel == 1){
                     robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

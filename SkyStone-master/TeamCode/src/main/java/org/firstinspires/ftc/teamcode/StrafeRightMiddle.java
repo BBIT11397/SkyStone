@@ -1,14 +1,12 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-@Disabled
-@Autonomous(name="RightMiddle", group="bbit")
-public class RightMiddle extends LinearOpMode {
+
+@Autonomous(name="StrafeRightMiddle", group="bbit")
+public class StrafeRightMiddle extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware robot = new Hardware();
@@ -154,4 +152,3 @@ public class RightMiddle extends LinearOpMode {
         robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }
-

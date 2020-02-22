@@ -317,7 +317,7 @@ public class BlueStonePlatform extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(250);
 
         robot.setUpMotors();
@@ -355,7 +355,7 @@ public class BlueStonePlatform extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(250);
 
         robot.setUpMotors();
@@ -424,7 +424,7 @@ public class BlueStonePlatform extends LinearOpMode {
         robot.foundationGrabberUp();
         sleep(500);
 
-        robot.strafeRight(4600, 1);
+        robot.strafeRight(5300, 1);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -432,5 +432,15 @@ public class BlueStonePlatform extends LinearOpMode {
             idle();
         }
         robot.allMotorsStop();
+
+        robot.forward(600, 1);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
+
     }
 }

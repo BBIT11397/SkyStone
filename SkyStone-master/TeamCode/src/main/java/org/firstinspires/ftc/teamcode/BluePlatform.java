@@ -25,7 +25,7 @@ public class BluePlatform extends LinearOpMode {
         waitForStart();
 
         //FORWARD
-        robot.backward(2500, 1);
+        robot.backward(2500, .4);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -60,7 +60,7 @@ public class BluePlatform extends LinearOpMode {
         }
         robot.allMotorsStop();
 
-        robot.forward(2000, 1);
+        robot.forward(2000, .4);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -78,7 +78,7 @@ public class BluePlatform extends LinearOpMode {
         robot.allMotorsStop();
         sleep(250);
 
-        robot.backward(2500, 1);
+        robot.backward(2500, .4);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -90,7 +90,7 @@ public class BluePlatform extends LinearOpMode {
         robot.foundationGrabberUp();
         sleep(250);
 
-        robot.strafeLeft(1500, 1);
+        robot.strafeLeft(1500, .4);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -99,7 +99,19 @@ public class BluePlatform extends LinearOpMode {
         }
         robot.allMotorsStop();
 
-        robot.forward(3900, 1);
+        robot.handUp();
+        sleep(250);
+
+        robot.turnRight(500, .25);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
+
+        robot.forward(3900, .4);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");

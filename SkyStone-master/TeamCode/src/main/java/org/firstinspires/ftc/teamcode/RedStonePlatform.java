@@ -319,7 +319,7 @@ public class RedStonePlatform extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(500);
 
         robot.setUpMotors();
@@ -346,7 +346,7 @@ public class RedStonePlatform extends LinearOpMode {
         robot.fingerRelease();
         sleep(250);
 
-        robot.stoneStart();
+        robot.handUp();
         sleep(500);
 
         robot.setUpMotors();
@@ -421,16 +421,7 @@ public class RedStonePlatform extends LinearOpMode {
         robot.foundationGrabberUp();
         sleep(250);
 
-        robot.strafeLeft(4000, 1);
-        while (robot.checkMotorIsBusy() && opModeIsActive()) {
-            telemetry.addLine()
-                    .addData("Task", "forward to stones");
-            telemetry.update();
-            idle();
-        }
-        robot.allMotorsStop();
-/*
-        robot.forward(3900, 0.25);
+        robot.strafeLeft(5300, 1);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -439,6 +430,14 @@ public class RedStonePlatform extends LinearOpMode {
         }
         robot.allMotorsStop();
 
- */
+        robot.forward(600, 1);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
+
     }
 }
