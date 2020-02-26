@@ -82,6 +82,7 @@ public class Teleop extends LinearOpMode {
         int armLeadLevelPosition = 0;
         int armMotorLevelPosition = 0 ;
         int newARMPositon = 0;
+        double swingIn = 0.4;
 
         double powerDown = 1;
         double powerUp = -1;
@@ -133,6 +134,8 @@ public class Teleop extends LinearOpMode {
         armLevel = -1;
 
         waitForStart();
+
+        robot.swing.setPosition(swingIn);
 
         while (opModeIsActive()) {
 
@@ -331,7 +334,7 @@ public class Teleop extends LinearOpMode {
             }
             //SWING
             if (gamepad2.left_bumper) {
-                robot.swing.setPosition(.22);
+                robot.swing.setPosition(swingIn);
             }
 
             if (gamepad2.left_trigger > 0){
@@ -400,17 +403,6 @@ public class Teleop extends LinearOpMode {
                     .addData("arm Level", armLevel);
             telemetry.update();
 
-/*
-            if (gamepad2.a) {
-                robot.foundationGrabberR.setPosition(.6);
-                robot.foundationGrabberL.setPosition(.4);
-            }
-
-            if (gamepad2.y) {
-                robot.foundationGrabberR.setPosition(0);
-                robot.foundationGrabberL.setPosition(1);
-            }
-*/
 
 /*
             if (gamepad2.x) {
