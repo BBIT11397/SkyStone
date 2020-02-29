@@ -64,6 +64,7 @@ public class Hardware {
     public Servo paddleTop          = null;
     public Servo blockStopperR      = null;
     public Servo blocksStopperL     = null;
+    public Servo capstoneDropper    = null;
 
     /* local OpMode members. */
     HardwareMap hwMap               =  null;
@@ -104,6 +105,7 @@ public class Hardware {
         foundationGrabberL = hwMap.get(Servo.class, "foundationGrabberL");
         stoneHand = hwMap.get(Servo.class, "stoneHand");
         stoneFinger = hwMap.get(Servo.class, "stoneFinger");
+
 
         //paddleTop   = hwMap.get(Servo.class,"paddleTop");
         //blockStopperR = hwMap.get(Servo.class, "blockStopperR");
