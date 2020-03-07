@@ -96,6 +96,7 @@ public class Teleop extends LinearOpMode {
         boolean grabberDown = false;
         boolean leftTriggerPressed = false;
         boolean rightTriggerPressed = false;
+        boolean capstoneOff = false;
 
         int armLevel;
 
@@ -115,6 +116,10 @@ public class Teleop extends LinearOpMode {
 
         dpad2Timer.reset();
 
+        ElapsedTime x1Timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+        x1Timer.reset();
+
         robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
@@ -130,6 +135,8 @@ public class Teleop extends LinearOpMode {
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         grabberDown = false;
+
+        capstoneOff = false;
 
         armLevel = -1;
 
@@ -387,8 +394,26 @@ public class Teleop extends LinearOpMode {
                 a2Timer.reset();
             }
 
+            if (gamepad1.x && x1Timer.milliseconds() > 500){
+                if(capstoneOff) {
+                    robot.capstoneDropper.setPosition(1);
+                    capstoneOff = false;
+                } else {
+                    robot.capstoneDropper.setPosition(0.15);
+                    capstoneOff = true;
+                }
+                x1Timer.reset();
+            }
+
+
             if(gamepad1.b){
                 robot.stoneStart();
+            }
+
+            if (gamepad2.right_stick_y > 0.5 || gamepad2.right_stick_y < -0.5){
+                    robot.tapeMeasure.setPower(gamepad2.right_stick_y);
+            } else {
+                robot.tapeMeasure.setPower(0);
             }
 
             telemetry.addLine()

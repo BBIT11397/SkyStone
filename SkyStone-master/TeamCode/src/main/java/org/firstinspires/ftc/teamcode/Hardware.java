@@ -53,6 +53,7 @@ public class Hardware {
     public DcMotor rightBack        = null;
     public DcMotor armMotor         = null;
     public DcMotor leadScrew        = null;
+    public DcMotor tapeMeasure      = null;
 
     public Servo jaw                = null;
     public Servo swing              = null;
@@ -98,6 +99,7 @@ public class Hardware {
 
         armMotor    = hwMap.get(DcMotor.class, "armMotor");
         leadScrew   = hwMap.get(DcMotor.class,"leadScrew");
+        tapeMeasure = hwMap.get(DcMotor.class,"tapeMeasure");
 
         jaw     = hwMap.get(Servo.class,"jaw");
         swing   = hwMap.get(Servo.class, "swing");
@@ -105,6 +107,7 @@ public class Hardware {
         foundationGrabberL = hwMap.get(Servo.class, "foundationGrabberL");
         stoneHand = hwMap.get(Servo.class, "stoneHand");
         stoneFinger = hwMap.get(Servo.class, "stoneFinger");
+        capstoneDropper = hwMap.get(Servo.class, "capstoneDropper");
 
 
         //paddleTop   = hwMap.get(Servo.class,"paddleTop");
@@ -118,6 +121,7 @@ public class Hardware {
 
         armMotor.setDirection(DcMotor.Direction.FORWARD);
         leadScrew.setDirection(DcMotor.Direction.FORWARD);
+        tapeMeasure.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
         leftBack.setPower(0);
@@ -127,6 +131,7 @@ public class Hardware {
 
         armMotor.setPower(0);
         leadScrew.setPower(0);
+        tapeMeasure.setPower(0);
 
 
         // Set all motors to run without encoders.
@@ -135,6 +140,8 @@ public class Hardware {
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        tapeMeasure.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -147,6 +154,8 @@ public class Hardware {
         jaw.setPosition(0.1);
         foundationGrabberR.setPosition(0);
         foundationGrabberL.setPosition(1);
+
+        capstoneDropper.setPosition(1);
 
         //init stone hand and finger
         stoneStart();

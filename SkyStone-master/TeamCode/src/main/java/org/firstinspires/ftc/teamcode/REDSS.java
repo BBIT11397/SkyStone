@@ -29,9 +29,9 @@ public class REDSS extends LinearOpMode {
     private VuforiaLocalizer vuforia;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
     private OpenGLMatrix lastLocation = null;
-    private static final float mmPerInch        = 25.4f;
+    private static final float mmPerInch = 25.4f;
     private static final float stoneZ = 2.00f * mmPerInch;
-    private String  name;
+    private String name;
 
     boolean isSkyStoneVisible = false;
 
@@ -77,7 +77,7 @@ public class REDSS extends LinearOpMode {
         waitForStart();
 
         //FORWARD
-        robot.forward(1500, power);
+        robot.forward(2000, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -88,42 +88,12 @@ public class REDSS extends LinearOpMode {
 
         sleep(500);
 
-        while (!isSkyStoneVisible) {
-            name = stoneTarget.getName();
-            telemetry.addData("FIX", name);
-            telemetry.update();
-            if (((VuforiaTrackableDefaultListener) stoneTarget.getListener()).isVisible()) {
-                telemetry.addData("Visible Target", stoneTarget.getName());
-                telemetry.update();
-                isSkyStoneVisible = true;
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) stoneTarget.getListener()).getUpdatedRobotLocation();
+        stonePosition = getPositionNumber(stoneTarget);
 
-                if (robotLocationTransform != null) {
-                    lastLocation = robotLocationTransform;
-                }
-            }
-            if (isSkyStoneVisible) {
-
-                // express position (translation) of robot in inches.
-                VectorF translation = lastLocation.getTranslation();
-                telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                        translation.get(0), translation.get(1), translation.get(2));
-                telemetry.update();
-
-                yValue = translation.get(1);
-                if (yValue > 0){
-                    stonePosition = 6;
-                }
-
-                if(yValue < 0){
-                    stonePosition = 5;
-                }
-            }
-            //do some stuff
-        }
         targetsSkyStone.deactivate();
+
         //slow to stones
-        robot.forward(1100, power);
+        robot.forward(600, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -144,7 +114,7 @@ public class REDSS extends LinearOpMode {
 
         //decide what block to grab
 
-        if(stonePosition == 6 && opModeIsActive()){
+        if (stonePosition == 6 && opModeIsActive()) {
             getStone6();
         }
 
@@ -152,12 +122,12 @@ public class REDSS extends LinearOpMode {
             getStone5();
         }
 
-        if (stonePosition == 0 && opModeIsActive()) {
-            getStone0();
+        if (stonePosition == 4 && opModeIsActive()) {
+            getStone4();
         }
     }
 
-    public void right90(){
+    public void right90() {
         robot.setUpMotors();
         robot.turnRight(1900, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
@@ -169,7 +139,7 @@ public class REDSS extends LinearOpMode {
         robot.allMotorsStop();
     }
 
-    public void captureSkystone(){
+    public void captureSkystone() {
         robot.handDown();
         sleep(500);
 
@@ -195,7 +165,7 @@ public class REDSS extends LinearOpMode {
         sleep(250);
     }
 
-    public void backOnLine(){
+    public void backOnLine() {
         //open top paddle
         robot.fingerRelease();
         sleep(250);
@@ -222,7 +192,7 @@ public class REDSS extends LinearOpMode {
         robot.allMotorsStop();
     }
 
-    public void getStone6(){
+    public void getStone6() {
         //found skystone
         //back to first block
 
@@ -255,14 +225,14 @@ public class REDSS extends LinearOpMode {
         robot.allMotorsStop();
     }
 
-    public void getStone0() {
+    public void getStone4() {
         //First/Second ;Third
         telemetry.addData("first", "third");
         telemetry.update();
 
         sleep(100);
 
-        robot.forward(700, power);
+        robot.backward(800, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -294,7 +264,7 @@ public class REDSS extends LinearOpMode {
         sleep(100);
 
         robot.setUpMotors();
-        robot.backward(500, power);
+        robot.backward(1000, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -317,5 +287,65 @@ public class REDSS extends LinearOpMode {
 
         backOnLine();
         robot.allMotorsStop();
+    }
+
+    public boolean skystoneNotFound(VuforiaTrackable stoneTarget) {
+
+        ElapsedTime vTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+
+        vTimer.reset();
+
+        lastLocation = null;
+
+        while (!isSkyStoneVisible && opModeIsActive()) {
+            //is stone in front of camera
+            name = stoneTarget.getName();
+            telemetry.addData("FIX", name);
+            telemetry.update();
+            if (((VuforiaTrackableDefaultListener) stoneTarget.getListener()).isVisible()) {
+                telemetry.addData("Visible Target", stoneTarget.getName());
+                telemetry.update();
+                isSkyStoneVisible = true;
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) stoneTarget.getListener()).getUpdatedRobotLocation();
+
+                if (robotLocationTransform != null) {
+                    lastLocation = robotLocationTransform;
+                }
+            }
+
+            if (vTimer.milliseconds() > 1000) {
+                break;
+            }
+            //do some stuff
+        }
+        return isSkyStoneVisible;
+    }
+
+    public int getPositionNumber(VuforiaTrackable stoneTarget) {
+        if (skystoneNotFound(stoneTarget)) {
+            return 6;
+        }
+
+        robot.strafeRight(650, power);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "reline");
+            idle();
+        }
+        robot.allMotorsStop();
+
+        if (skystoneNotFound(stoneTarget)) {
+            return 5;
+        }
+
+        robot.strafeRight(650, power);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "reline");
+            idle();
+        }
+        robot.allMotorsStop();
+
+        return 4;
     }
 }
