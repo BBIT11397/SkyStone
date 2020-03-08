@@ -407,8 +407,8 @@ public class Teleop extends LinearOpMode {
 
 
             if(gamepad1.b){
-                robot.stoneStart();
-            }
+                robot.stoneHand.setPosition(0);
+                robot.stoneFinger.setPosition(0);            }
 
             if (gamepad2.right_stick_y > 0.5 || gamepad2.right_stick_y < -0.5){
                     robot.tapeMeasure.setPower(gamepad2.right_stick_y);

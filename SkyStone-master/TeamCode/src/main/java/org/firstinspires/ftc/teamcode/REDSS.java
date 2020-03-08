@@ -104,7 +104,7 @@ public class REDSS extends LinearOpMode {
         sleep(250);
 
         robot.setUpMotors();
-        robot.turnLeft(1900, power);
+        robot.turnLeft(1850, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");

@@ -77,7 +77,25 @@ public class BLUESKY extends LinearOpMode {
         waitForStart();
 
         //FORWARD
-        robot.forward(2000, power);
+        robot.forward(500, power);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
+
+        robot.strafeRight(800, power);
+        while (robot.checkMotorIsBusy() && opModeIsActive()) {
+            telemetry.addLine()
+                    .addData("Task", "forward to stones");
+            telemetry.update();
+            idle();
+        }
+        robot.allMotorsStop();
+
+        robot.forward(1500, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "forward to stones");
@@ -104,7 +122,7 @@ public class BLUESKY extends LinearOpMode {
         sleep(250);
 
         robot.setUpMotors();
-        robot.turnLeft(1900, power);
+        robot.turnLeft(1850, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -199,7 +217,7 @@ public class BLUESKY extends LinearOpMode {
         telemetry.addData("first", "first");
         telemetry.update();
 
-        robot.forward(800, power);
+       /* robot.forward(800, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -208,6 +226,7 @@ public class BLUESKY extends LinearOpMode {
         robot.allMotorsStop();
         sleep(250);
 
+        */
         captureSkystone();
 
         //over line
@@ -232,14 +251,14 @@ public class BLUESKY extends LinearOpMode {
 
         sleep(100);
 
-        robot.forward(800, power);
+       /*robot.forward(800, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
             idle();
         }
         robot.allMotorsStop();
-
+        */
         captureSkystone();
 
         //over line
@@ -264,7 +283,7 @@ public class BLUESKY extends LinearOpMode {
         sleep(100);
 
         robot.setUpMotors();
-        robot.forward(800, power);
+        robot.forward(100, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
@@ -326,7 +345,7 @@ public class BLUESKY extends LinearOpMode {
             return 6;
         }
 
-        robot.strafeLeft(650, power);
+        robot.strafeLeft(900, power);
         while (robot.checkMotorIsBusy() && opModeIsActive()) {
             telemetry.addLine()
                     .addData("Task", "reline");
